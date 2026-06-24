@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurnal de Lucru - Proiect ETTI</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            line-height: 1.6; 
+            max-width: 1000px; 
+            margin: 20px auto; 
+            padding: 0 20px; 
+            color: #222;
+        }
+        h1 { border-bottom: 3px solid #333; padding-bottom: 5px; }
+        h2 { border-bottom: 2px solid #666; margin-top: 40px; color: #111; }
+        h3 { margin-top: 20px; color: #333; }
+        table { 
+            border-collapse: collapse; 
+            width: 100%; 
+            margin-top: 15px; 
+            margin-bottom: 15px;
+        }
+        th, td { 
+            border: 1px solid #777; 
+            padding: 8px; 
+            text-align: left; 
+        }
+        th { background-color: #e0e0e0; }
+        ul { margin-bottom: 15px; }
+        .deadline { color: #d9534f; font-weight: bold; font-size: 0.9em; }
+        .img-container {
+            border: 1px dashed #999;
+            padding: 10px;
+            text-align: center;
+            background-color: #f9f9f9;
+            margin: 15px 0;
+        }
+        .img-container img {
+            max-width: 1024px; /* Limită cerută în documentație */
+            width: 100%;
+            height: auto;
+        }
+        .note { background-color: #ffffcc; border-left: 4px solid #ffcc00; padding: 10px; margin: 15px 0; }
+    </style>
+</head>
+<body>
+
+    <h1>Jurnal de Lucru: Ceas pe inel de 24 LED-uri adresabile (WS2812B)</h1>
+    <p><strong>Realizat de: DRAGOTONIU Ionuț-Constantin 431C<br>BENGULESCU Vlad-Alexandru 431C</strong></p>
+
+    <!-- SECȚIUNEA 1 -->
+    <h2>1. Modul de implementare</h2>
+    <p>
+        Proiectul constă într-un ceas afișat pe un inel cu 24 de LED-uri adresabile individual (WS2812B), plus un LED THT central care va funcționa drept secundar(va clipi pentru fiecare secundă care trece). 
+        Sistemul este controlat de un microcontroller STM32F103 (rulând la 72MHz), iar ora și minutul vor fi transmise prin terminalul de la Visual Studio (placa va trebui să fie conectată prin USB to TTL la laptop)
+    </p>
+    <h3>Logica de funcționare și I/O:</h3>
+    <ul>
+        <li><strong>Afișare Ore/Minute:</strong> Cele 24 de LED-uri de pe inel sunt împărțite alternativ. LED-urile cu index par afișează ora (12 poziții), iar cele cu index impar afișează minutele, mapate corespunzător.</li>
+        <li><strong>Afișare Secunde:</strong> Secundarul este afișat pe LED-ul THT central.</li>
+        <li><strong>Iluminare:</strong> LED-urile "stinse" vor fi menținute la o culoare de intensitate foarte mică (ex. roșu/verde 'dim') pentru fundal, în timp ce markerii de timp vor avea culori intense (ex. Roșu pentru oră, Verde pentru minute).</li>
+    </ul>
+	<h3>Componente achiziționate în plus:</h3>
+	<ul>
+	<li><strong>Condensator 1000uF/35V (cumpărat de la OptimusDigital)(utilizat pentru alimentarea inelului de 24 LED-uri)</strong>
+	<li><strong>Inel 24 LED WS2812B (cumpărat de la OptimusDigital)</strong>
+	<li><strong>2 Rezistențe de 220 și 330 (cumpărat de la OptimusDigital) (utilizate pentru protectia LED-ului THT si a inelului)</strong>
+	</ul>
+    <!-- SECȚIUNEA 2 -->
+    <h2>2. Descrierea hardware</h2>
+	
+    <h3>Schema Electrică</h3>
+    <div class="img-container">
+        <!-- Înlocuiește src cu numele real al imaginii tale -->
+        <img src="-" alt="Schema electrică a machetei">
+        <p><em>Fig 1. Captură de ecran cu schema electrică</em></p>
+    </div>
+
+    <h3>Bill of Materials (BOM)</h3>
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <thead>
+        <tr style="background-color: #f2f2f2;">
+            <th style="padding: 8px;">Nr. Crt.</th>
+            <th style="padding: 8px;">Componentă</th>
+            <th style="padding: 8px;">Capsulă</th>
+            <th style="padding: 8px;">Cantitate</th>
+            <th style="padding: 8px;">Furnizor</th>
+            <th style="padding: 8px;">Preț (RON)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Microcontroller STM32F103C8T6</td>
+            <td>DIP-40 (Modul)</td>
+            <td>1</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>LED RGB</td>
+            <td>SMD</td>
+            <td>1</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>LED</td>
+            <td>THT</td>
+            <td>1</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Cristal 8MHz</td>
+            <td>THT</td>
+            <td>1</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Fire Colorate Mamă-Tată (10p) 20 cm</td>
+            <td>THT</td>
+            <td>1</td>
+            <td>Optimus Digital</td>
+            <td>3.99 RON</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Conectori pin tată 3x2</td>
+            <td>THT</td>
+            <td>1</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>Conectori pin mamă 6x1</td>
+            <td>THT</td>
+            <td>1</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td><a href="https://www.optimusdigital.ro/ro/optoelectronice-altele/5623-inel-cu-24-led-uri-rgb-adresabile-ws2812.html" target="_blank">Inel 24 LED-uri WS2812B</a></td>
+            <td>Modul PCB Circular</td>
+            <td>1</td>
+            <td>Optimus Digital</td>
+            <td>23.18 RON</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td><a href="https://www.optimusdigital.ro/ro/butoane-i-comutatoare/1119-buton-6x6x6.html" target="_blank">Buton 6x6x6</a></td>
+            <td>THT</td>
+            <td>4</td>
+            <td>Optimus Digital</td>
+            <td>1.44 RON</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td>Condensator 18pf</td>
+            <td>SMD</td>
+            <td>2</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td>Condensator 10uF</td>
+            <td>SMD</td>
+            <td>2</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>Condensator 100nF</td>
+            <td>SMD</td>
+            <td>5</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+		<tr>
+            <td>13</td>
+            <td><a href="https://www.optimusdigital.ro/ro/componente-electronice-condensatoare/3004-condensator-electrolitic-de-1000-uf-la-35-v.html?search_query=1000uf%2F35v&results=1">Condensator 1000uF/35V</a></td>
+            <td>THT</td>
+            <td>1</td>
+            <td>Optimus Digital</td>
+            <td>1.99 RON</td>
+        </tr>
+        <tr>
+            <td>14</td>
+            <td>Rezistență 220Ω</td>
+            <td>SMD</td>
+            <td>4</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>15</td>
+            <td>Rezistență 82kΩ</td>
+            <td>SMD</td>
+            <td>2</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>Rezistență 1.5kΩ</td>
+            <td>SMD</td>
+            <td>1</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+		<tr>
+            <td>17</td>
+            <td>Rezistență 1MΩ</td>
+            <td>SMD</td>
+            <td>1</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+		<tr>
+            <td>18</td>
+            <td>Rezistență 10Ω</td>
+            <td>SMD</td>
+            <td>1</td>
+            <td>UPB</td>
+            <td>-</td>
+        </tr>
+		<tr>
+            <td>19</td>
+            <td><a href="https://www.optimusdigital.ro/ro/interfata-convertoare-usb-la-serial/13390-convertor-ch340g-la-uart.html?search_query=ch340g&results=11">Convertor USB to TTL CH340G</a></td>
+            <td>-</td>
+            <td>1</td>
+            <td>Optimus Digital</td>
+            <td>9.99 RON</td>
+        </tr>
+    </tbody>
+</table>
+
+    <h3>Etapele asamblării (Fotografii machetă)</h3>
+	<div class="img-container">
+        <img src="imagine7april1024.jpg" alt="Machetă neasamblată">
+        <p><em>Fig 1. Stadiul 0: Am primit plăcuța și am lipit microcontrolerul (7 aprilie)</em></p>
+    </div>
+    <div class="img-container">
+        <img src="imagine21april1024.jpg" alt="Machetă parțial asamblată">
+        <p><em>Fig 2. Stadiul 1: Machetă cu componente parțial lipite (21 aprilie)</em></p>
+    </div>
+    <div class="img-container">
+        <img src="imagine12mai768x768.jpg" alt="Machetă asamblată complet">
+        <p><em>Fig 3. Stadiul 2: Toate piesele lipite, fără piesele unice pentru proiectul echipei noastre (W5). (12 mai)</em></p>
+    </div>
+
+    <!-- SECȚIUNEA 3 -->
+    <h2>3. Descrierea software</h2>
+    <!-- SECȚIUNEA 4 -->
+    <h2>4. Rezultate și concluzii</h2>
+    <!-- SECȚIUNEA 5 -->
+    <h2>5. Bibliografie</h2>
+    <ul>
+        <li>Datasheet STM32F103C8T6 - STMicroelectronics.</li>
+        <li>Datasheet WS2812B Intelligent control LED - Worldsemi.</li>
+        <li><a href="https://www.w3schools.com/Html/">Documentație pentru HTML</a></li>
+    </ul>
+</body>
+</html>
