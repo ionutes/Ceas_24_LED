@@ -10,6 +10,7 @@
 Proiectul constă într-un ceas afișat pe un inel cu 24 de LED-uri adresabile individual (WS2812B), plus un LED THT central care funcționează drept secundar (clipește la fiecare secundă care trece).
 
 Sistemul este controlat de un microcontroller **STM32F103** (rulând la 72MHz), iar ora și minutul se pot sincroniza trimițând date prin terminalul serial (conectat prin USB to TTL).
+<img width="1010" height="750" alt="image" src="https://github.com/user-attachments/assets/30be0ac5-2fbe-49e4-a2c0-9c168bc72e9d" />
 
 **Logica de funcționare și I/O:**
 * **Afișare Ore/Minute:** Cele 24 de LED-uri de pe inel sunt împărțite alternativ. LED-urile cu index par afișează ora (12 poziții), iar minutele sunt împărțite proporțional pe toate cele 24 de leduri.
